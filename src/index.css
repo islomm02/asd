@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root{
+    --clr-gold:#bc8e5b;
+}
+body{
+    background-color: #e0e0e0;
+}
+.ant-btn-primary, .ant-menu-item-selected{
+    background-color: var(--clr-gold) !important;
+}
+.ant-input-affix-wrapper-focused, .ant-input-outlined:hover{
+    border-color: var(--clr-gold) !important;
+   box-shadow: 0 0 0 2px #bc8f5b2d !important;
+}
+.ant-input-outlined:focus{
+    box-shadow: 0 0 0 2px #bc8f5b4b !important;
+}
+.ant-btn-default:hover, .ant-pagination-item-active{
+    border-color: var(--clr-gold) !important;
+    color: var(--clr-gold) !important;
+}
+.ant-pagination-item-active > a, .ant-spin-dot{
+    color:var(--clr-gold) !important;
+}
+
+.mainClass {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    background-color: white; 
+  }
+  
+  .animated-logo {
+    color: #bc8e5b;
+    animation: spinY 1.2s linear infinite;
+    transform-style: preserve-3d;
+  }
+  
+  @keyframes spinY {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+  
