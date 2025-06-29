@@ -1,19 +1,23 @@
 import { Input } from "antd"
 import CreateCaption from "../../components/CreateCaption"
 import UploadImg from "../../components/UploadImg"
-import { useContext, useState, type FormEvent } from "react"
+import { useContext, useEffect, useState, type FormEvent } from "react"
 import type { UploadType } from "../../types/UploadType"
 import { instance } from "../../hooks/instance"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import toast, { Toaster } from "react-hot-toast"
 import { Context } from "../../context/Context"
+import { API } from "../../hooks/getEnv"
 
 const MajorCreate = () => {
+  const [updatedData, setUpdatedData] = useState({});
   const navigate = useNavigate()
   const {token} = useContext(Context)
   const [loading, setIsLoading] = useState<boolean>(false)
   const [image, setImage] = useState<UploadType | any>()
   const [name, setName] = useState<string>("")
+
+  const {id} = useParams()
 
   function handleCreate(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -30,6 +34,26 @@ const MajorCreate = () => {
       toast.error("Xatolik bor")
     })
   }
+
+
+  useEffect(() => {
+    if (id) {
+      instance(`/stacks/${id}`, { headers: { "Authorization": `Bearer ${token}` } }).then(res => {
+        setUpdatedData(res.data)
+        setName(res.data.name)
+        const type = res.data.image.split(".")[res.data.image.split(".").length -1]
+        const data = {
+          uid: "-1",
+          name: `image.${type}`,
+          status: "done",
+          url: `${API}/file/${res.data.image}`
+        }
+        console.log(data);
+        
+      })
+    }
+  },[])
+
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />

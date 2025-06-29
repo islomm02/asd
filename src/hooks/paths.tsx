@@ -9,6 +9,7 @@ export const paths = {
     major:"/major",
     majorCrud:"/major/create",
     majorMore:"/major/:id",
+    majorEdit:"/major/:id/edit",
     groups:"/groups",
     students:"/students",
     teachers:"/teachers",
@@ -55,6 +56,11 @@ export const DashboardRouteList = [
         id:8,
         path:paths.majorMore,
         element:<MajorMore/>
+    },
+    {
+        id:9,
+        path:paths.majorEdit,
+        element:<MajorCreate/>
     },
 ]
 export const DashboardNavList = [
