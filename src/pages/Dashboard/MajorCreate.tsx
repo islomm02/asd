@@ -8,9 +8,10 @@ import { useNavigate, useParams } from "react-router-dom"
 import toast, { Toaster } from "react-hot-toast"
 import { Context } from "../../context/Context"
 import { API } from "../../hooks/getEnv"
+import type { UploadImgType } from "../../types/UpdateImgType"
 
 const MajorCreate = () => {
-  const [updatedData, setUpdatedData] = useState({});
+  const [updatedData, setUpdatedData] = useState<UploadImgType | {}>({});
   const navigate = useNavigate()
   const {token} = useContext(Context)
   const [loading, setIsLoading] = useState<boolean>(false)
@@ -39,20 +40,19 @@ const MajorCreate = () => {
   useEffect(() => {
     if (id) {
       instance(`/stacks/${id}`, { headers: { "Authorization": `Bearer ${token}` } }).then(res => {
-        setUpdatedData(res.data)
         setName(res.data.name)
         const type = res.data.image.split(".")[res.data.image.split(".").length -1]
-        const data = {
+        const data: UploadImgType= {
           uid: "-1",
           name: `image.${type}`,
           status: "done",
           url: `${API}/file/${res.data.image}`
-        }
-        console.log(data);
-        
+        }      
+        setUpdatedData(data)
       })
     }
-  },[])
+  }, [])
+  
 
   return (
     <>
@@ -61,13 +61,21 @@ const MajorCreate = () => {
         <div className="bg-white rounded-md p-5">
           <CreateCaption loading={loading} title="Yo'nalish qo'shish" />
           <div className="mt-[30px]">
-            <Input value={name} onChange={(e) => setName(e.target.value)} className="mb-5 !w-[60%]" size="large" name="name" placeholder="Yo'nalish nomini kiriting" allowClear />
-            <UploadImg setImage={setImage} />
+            <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="mb-5 !w-[60%]"
+              size="large"
+              name="name"
+              placeholder="Yo'nalish nomini kiriting"
+              allowClear
+            />
+            <UploadImg updatedData={updatedData} setImage={setImage} />
           </div>
         </div>
       </form>
     </>
-  )
+  );
 }
 
 export default MajorCreate

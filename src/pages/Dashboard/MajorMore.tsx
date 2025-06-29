@@ -1,4 +1,4 @@
-import { ArrowLeftOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons"
+import { ArrowLeftOutlined, DeleteOutlined, EditOutlined} from "@ant-design/icons"
 import { useContext, useEffect, useState } from "react"
 import type { MajorType } from "../../types/MajorType"
 import { useNavigate, useParams } from "react-router-dom"
@@ -10,7 +10,7 @@ import { formatTime } from "../../hooks/formatTime"
 import { API } from "../../hooks/getEnv"
 import { Delete } from "../../service/Actions"
 import { Toaster } from "react-hot-toast"
-import CustomTable from "../../components/CustomTable"
+import GroupData from "../../components/GroupData"
 
 const MajorMore = () => {
   const { id } = useParams()
@@ -20,32 +20,8 @@ const MajorMore = () => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const navigate = useNavigate()
 
-  const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-    },
-    {
-      title: "Nomi",
-      dataIndex: "name",
-    },
-    {
-      title: "Dars xonasi",
-      dataIndex: "roomName",
-    },
-    {
-      title: "Yaratilgan Vaqti",
-      dataIndex: "createdAt",
-    },
-    {
-      title: "Xolati",
-      dataIndex: "createdAt",
-    },
-    {
-      title: "Batafsil",
-      dataIndex: "createdAt",
-    },
-  ];
+
+
 
 
 
@@ -62,10 +38,10 @@ const MajorMore = () => {
   }, [])
   return (
     <>
-      <div className="p-5">
+      <div className="p-5 ">
         <Toaster position="top-right" reverseOrder={false} />
-        <div className="p-5 bg-white rounded-md">
-          <div className="flex items-center justify-between">
+        <div className="p-5 bg-white rounded-md ">
+          <div className="flex items-center justify-between ">
             <div className="flex items-center gap-[15px]">
               <button className="cursor-pointer" onClick={() => navigate(-1)}>
                 {" "}
@@ -86,7 +62,7 @@ const MajorMore = () => {
                 <DeleteOutlined className="text-[20px]" />{" "}
               </Button>
               <Button
-                onClick={() => navigate('edit')}
+                onClick={() => navigate("edit")}
                 className="w-[40px] h-[30px] "
                 type="primary"
                 size="middle"
@@ -116,10 +92,15 @@ const MajorMore = () => {
               </li>
             </ul>
           </div>
-          {/* <CustomTable columns={columns} data={} /> */}
+
+          <GroupData id={id} />
+          
         </div>
       </div>
-      <Modal confirmLoading={loading} title="Ishonchinggiz komilmi?" open={openModal}
+      <Modal
+        confirmLoading={loading}
+        title="Ishonchinggiz komilmi?"
+        open={openModal}
         okText="O'chirish"
         cancelText="Bekor qilish"
         onCancel={() => setOpenModal(false)}
