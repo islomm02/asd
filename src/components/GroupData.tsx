@@ -3,8 +3,9 @@ import { Button } from "antd";
 import CustomTable from "./CustomTable";
 import type { FC } from "react";
 import { getGroup } from "../service/getGroups";
+import { useNavigate } from "react-router-dom";
 
-const GroupData: FC<{ id: string | undefined }> = ({ id }) => {
+const GroupData: FC<{ id?: string | undefined }> = ({ id }) => {
   const columns = [
     {
       title: "ID",
@@ -32,16 +33,25 @@ const GroupData: FC<{ id: string | undefined }> = ({ id }) => {
     },
   ];
 
+  const navigate = useNavigate()
   const groups = getGroup("/groups", id);
 
   return (
     <>
-      <div className="pt-7 flex items-center justify-between">
-        <h2 className="font-semibold text-[20px]">Guruxlari</h2>
-        <Button type="primary" icon={<PlusOutlined />}>
-          Qo'shish
-        </Button>
-      </div>
+      {id ? (
+        <div className="pt-7 flex items-center justify-between">
+          <h2 className="font-semibold text-[20px]">Guruxlari</h2>
+          <Button
+            onClick={() => navigate("/groups/create")}
+            type="primary"
+            icon={<PlusOutlined />}
+          >
+            Qo'shish
+          </Button>
+        </div>
+      ) : (
+        ""
+      )}
 
       <div className="pt-15">
         <CustomTable columns={columns} data={groups} loading={false} />

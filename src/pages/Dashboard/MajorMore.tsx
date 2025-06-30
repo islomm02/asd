@@ -1,41 +1,41 @@
-import { ArrowLeftOutlined, DeleteOutlined, EditOutlined} from "@ant-design/icons"
-import { useContext, useEffect, useState } from "react"
-import type { MajorType } from "../../types/MajorType"
-import { useNavigate, useParams } from "react-router-dom"
-import { instance } from "../../hooks/instance"
-import { Context } from "../../context/Context"
-import { Button, Modal } from "antd"
-import MoreItem from "../../components/MoreItem"
-import { formatTime } from "../../hooks/formatTime"
-import { API } from "../../hooks/getEnv"
-import { Delete } from "../../service/Actions"
-import { Toaster } from "react-hot-toast"
-import GroupData from "../../components/GroupData"
+import {
+  ArrowLeftOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
+import { useContext, useEffect, useState } from "react";
+import type { MajorType } from "../../types/MajorType";
+import { useNavigate, useParams } from "react-router-dom";
+import { instance } from "../../hooks/instance";
+import { Context } from "../../context/Context";
+import { Button, Modal } from "antd";
+import MoreItem from "../../components/MoreItem";
+import { formatTime } from "../../hooks/formatTime";
+import { API } from "../../hooks/getEnv";
+import { Delete } from "../../service/Actions";
+import { Toaster } from "react-hot-toast";
+import GroupData from "../../components/GroupData";
 
 const MajorMore = () => {
-  const { id } = useParams()
-  const { token } = useContext(Context)
-  const [singleMajor, setSingleMajor] = useState<MajorType>()
-  const [loading, setLoading] = useState(false)
-  const [openModal, setOpenModal] = useState<boolean>(false)
-  const navigate = useNavigate()
+  const { id } = useParams();
+  const { token } = useContext(Context);
+  const [singleMajor, setSingleMajor] = useState<MajorType>();
+  const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const navigate = useNavigate();
 
-
-
-
-
-
-
-  function handleDelete(){
-    setLoading(true)
-    Delete(`/stacks/${id}`,token, setOpenModal, setLoading, navigate)
+  function handleDelete() {
+    setLoading(true);
+    Delete(`/stacks/${id}`, token, setOpenModal, setLoading, navigate);
   }
 
   useEffect(() => {
     if (id) {
-      instance(`/stacks/${id}`, { headers: { "Authorization": `Bearer ${token}` } }).then(res => setSingleMajor(res.data))
+      instance(`/stacks/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }).then((res) => setSingleMajor(res.data));
     }
-  }, [])
+  }, []);
   return (
     <>
       <div className="p-5 ">
@@ -94,7 +94,6 @@ const MajorMore = () => {
           </div>
 
           <GroupData id={id} />
-          
         </div>
       </div>
       <Modal
@@ -108,6 +107,6 @@ const MajorMore = () => {
       ></Modal>
     </>
   );
-}
+};
 
-export default MajorMore
+export default MajorMore;
